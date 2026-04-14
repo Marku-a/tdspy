@@ -95,8 +95,12 @@ def surrogate_tds(
     null_scores = []
 
     for s in range(n_surrogates):
-        if verbose and s % 100 == 0:
-            print(f"  Surrogate {s+1}/{n_surrogates}", end="\r")
+        if verbose:
+            pct = (s + 1) / n_surrogates * 100
+            bar_len = 30
+            filled  = int(bar_len * (s + 1) / n_surrogates)
+            bar     = "#" * filled + "-" * (bar_len - filled)
+            print(f"\r  [{bar}] {pct:5.1f}%  ({s+1}/{n_surrogates})", end="", flush=True)
 
         surrogate = build_surrogate_subject(dataset, rng)
 
