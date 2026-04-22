@@ -31,6 +31,10 @@ class TDSParams:
     tolerance : int
         Allowed deviation in τ₀ (samples) to still be considered stable.
         Default ±1.
+    window_anchor : str
+        Where on the window to stamp each t_vec value. ``"center"`` (default)
+        uses ``start + L//2``; ``"end"`` uses ``start + L`` (the last sample
+        of the window — the earliest moment the result could be known).
     n_surrogates : int
         Number of surrogate subjects for null distribution. Default 1000.
     alpha : float
@@ -45,3 +49,4 @@ class TDSParams:
     tolerance: int = 1
     n_surrogates: int = 1000
     alpha: float = 0.05
+    window_anchor: str = "center"  # "center" → start + L//2; "end" → start + L
