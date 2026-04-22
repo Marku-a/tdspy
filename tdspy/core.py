@@ -34,7 +34,7 @@ def time_delay_interaction(
     t_vec : np.ndarray
         Centre-time of each window (sample index).
     cmax : np.ndarray
-        Peak absolute cross-correlation value at each window.
+        Peak cross-correlation value at each window (signed).
     """
     if params is None:
         params = TDSParams()
@@ -61,7 +61,10 @@ def time_delay_interaction(
         seg1 = zscore(s1[start:end])
         seg2 = zscore(s2[start:end])
 
-        t_vec[idx] = start + L // 2   # centre of window
+        if params.window_anchor == "end":
+            t_vec[idx] = end
+        else:
+            t_vec[idx] = start + L // 2
 
         # Flat segment → skip (leave as NaN → treated as unstable)
         if np.all(seg1 == 0) or np.all(seg2 == 0):
@@ -74,7 +77,7 @@ def time_delay_interaction(
         abs_C = np.abs(C)
         best = np.argmax(abs_C)
         tau[idx] = lags[best]
-        cmax[idx] = abs_C[best]
+        cmax[idx] = C[best]        # signed: preserves direction of coupling
 
     # Trim to actual computed windows
     valid = ~np.isnan(t_vec)
