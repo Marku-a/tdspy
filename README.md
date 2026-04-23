@@ -89,6 +89,7 @@ All algorithm parameters in one place. Pass a single instance through all functi
 | `stability_window` | `5` | Number of consecutive τ₀ points assessed for stability |
 | `stability_min` | `4` | Minimum points within tolerance to call stable (out of `stability_window`) |
 | `tolerance` | `1` | Allowed deviation in τ₀ to still count as "same lag" (±samples) |
+| `window_anchor` | `"center"` | Where to stamp each `t_vec` timestamp: `"center"` = window midpoint (`start + L//2`); `"end"` = last sample of window — the earliest moment the result could be known in real time |
 | `n_surrogates` | `1000` | Number of surrogate subjects for null distribution |
 | `alpha` | `0.05` | Significance level — threshold = (1−α) percentile of null scores |
 
